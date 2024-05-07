@@ -8,7 +8,7 @@ En el recurso se utiliza ``count`` para crear o no el recurso en caso de que el 
 
 - Ejemplo 1: 
 
-![resultado_1](./resultado1.png)
+![resultado_1](https://github.com/stemdo-labs/terraform-exercises-EperezStemdo-1/blob/eperez/soluciones/ejercicio-4/imagenes/resultado1.png)
 
 ![resultado_2](./resultado2.png)
 
