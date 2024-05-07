@@ -1,0 +1,25 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "~> 3.0.2"
+    }
+  }
+
+  required_version = ">= 1.1.0"
+}
+
+provider "azurerm" {
+  features {
+    
+  }
+}
+
+#module "networkgroup" {
+#  source = "./modules/networkgroup"
+#  name = 
+#  network_security_group_id = 
+#  resource_group_name = 
+#  location = 
+#  subnet_id = 
+#}
