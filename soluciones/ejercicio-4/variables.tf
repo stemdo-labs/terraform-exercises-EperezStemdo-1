@@ -38,7 +38,8 @@ locals {
   listavariables = [
     var.owner_tag,
     var.environement_tag,
-    var.vnet_name
+    var.vnet_name,
+    var.vnet_tags
   ]
 
   # Verificar si alguna variable está vacía o es null
@@ -54,3 +55,6 @@ locals {
   contains_any_word = contains(local.elist, "dev") || contains(local.elist, "pro") || contains(local.elist, "tes") || contains(local.elist, "pre") ? true : false
 }
 
+locals {
+  begin_env = startswith(var.vnet_name, "vnet") ? true : false
+}
