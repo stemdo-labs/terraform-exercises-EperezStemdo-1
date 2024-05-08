@@ -1,5 +1,6 @@
 # Salida en la teminal
 
+```
 PS C:\Users\eperez\EjerciciosBootcamp\6-terraform-2\terraform-exercises-EperezStemdo-1\soluciones\ejercicio-5\modulo1> terraform plan
 
 Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
@@ -30,3 +31,5 @@ Plan: 1 to add, 0 to change, 0 to destroy.
 ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── 
 
 Note: You didn't use the -out option to save this plan, so Terraform can't guarantee to take exactly these actions if you run "terraform apply" now.
+
+```
