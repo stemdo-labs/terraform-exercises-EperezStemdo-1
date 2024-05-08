@@ -1,5 +1,17 @@
-  variable "namesubnet" {
-    type = string
+  #variable "namesubnet" {
+  #  type = string
+  #  description = "The name of the subnet"
+  #}
+
+  #locals {
+  #  namessubnet = [
+  #    "subneteperez",
+  #    "subneteperez2"
+  #  ]
+  #}
+
+  variable "namessubnet" {
+    type = list(string)
     description = "The name of the subnet"
   }
 
