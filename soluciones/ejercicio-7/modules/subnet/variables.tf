@@ -1,4 +1,4 @@
-  variable "name" {
+  variable "namesubnet" {
     type = string
     description = "The name of the subnet"
   }

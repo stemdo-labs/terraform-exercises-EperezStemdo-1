@@ -1,5 +1,4 @@
-  name = "epereznetworksecuritygroup"
+  namenetgroup = "epereznetworksecuritygroup"
   location = "West Europe"
   resource_group_name = "rg1eperez-lab01"
-  subnet_id = "value"
-  network_security_group_id = "value"
+ 
