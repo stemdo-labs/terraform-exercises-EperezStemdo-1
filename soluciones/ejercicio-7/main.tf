@@ -26,13 +26,11 @@ module "vnet" {
 
 module "subnet" {
   source = "./modules/subnet"
-  count = 2
-  namesubnet = var.namesubnet[count.index] #"${var.nameSubnet}_${count.index}"
+  namessubnet = var.namessubnet
   resource_group_name  = var.resource_group_name
   virtual_network_name = var.virtual_network_name
   address_prefixes     = var.address_prefixes
 }
-
 module "networkgroup" {
   source = "./modules/networkgroup"
   namenetgroup = var.namenetgroup
@@ -41,6 +39,8 @@ module "networkgroup" {
 }
 
 resource "azurerm_subnet_network_security_group_association" "assoc" {
-  subnet_id                 = module.subnet.subnet_id   #"The ID of the Subnet"
-  network_security_group_id = module.networkgroup.secgrup_id  #"The ID of the Network Security Group which should be associated with the Subnet"
+  #subnet_id                 = module.subnet.subnet_id   #"The ID of the Subnet"
+  #network_security_group_id = module.networkgroup.secgrup_id  #"The ID of the Network Security Group which should be associated with the Subnet"
+  subnet_id                 = module.subnet.subnet_ids[0]
+  network_security_group_id = module.networkgroup.secgrup_id
 }

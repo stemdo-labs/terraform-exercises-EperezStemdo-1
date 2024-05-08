@@ -37,7 +37,7 @@ variable "vnet_tags" {
 
 #subnet
 
-  variable "namesubnet" {
+  variable "namessubnet" {
     type = list(string)
     description = "The name of the subnet"
   }

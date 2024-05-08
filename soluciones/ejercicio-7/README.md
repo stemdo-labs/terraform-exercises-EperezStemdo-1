@@ -23,7 +23,7 @@ Terraform will perform the following actions:
       + security_rule       = (known after apply)
     }
 
-   module.subnet.azurerm_subnet.subnet will be created
+   module.subnet.azurerm_subnet.subnet[0] will be created
   + resource "azurerm_subnet" "subnet" {
       + address_prefixes                               = [
           + "10.0.1.0/24",
@@ -32,6 +32,19 @@ Terraform will perform the following actions:
       + enforce_private_link_service_network_policies  = false
       + id                                             = (known after apply)
       + name                                           = "subneteperez"
+      + resource_group_name                            = "rg1eperez-lab01"
+      + virtual_network_name                           = "vnetepereztfexercise07"
+    }
+
+   module.subnet.azurerm_subnet.subnet[1] will be created
+  + resource "azurerm_subnet" "subnet" {
+      + address_prefixes                               = [
+          + "10.0.1.0/24",
+        ]
+      + enforce_private_link_endpoint_network_policies = false
+      + enforce_private_link_service_network_policies  = false
+      + id                                             = (known after apply)
+      + name                                           = "subneteperez2"
       + resource_group_name                            = "rg1eperez-lab01"
       + virtual_network_name                           = "vnetepereztfexercise07"
     }
@@ -54,7 +67,7 @@ Terraform will perform the following actions:
         }
     }
 
-Plan: 4 to add, 0 to change, 0 to destroy.
+Plan: 5 to add, 0 to change, 0 to destroy.
 
 ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── 
 
