@@ -7,7 +7,7 @@ terraform {
   }
   backend "azurerm" {
       resource_group_name  = "rg1eperez-lab01"
-      storage_account_name = "tfstateeperezq4jv3" 
+      storage_account_name = "sta1eperez" 
       container_name       = "tfstateeperez"
       key                  = "terraform.tfstate"
   }
@@ -17,4 +17,3 @@ terraform {
 provider "azurerm" {
   features {}
 }
-
