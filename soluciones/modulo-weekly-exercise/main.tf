@@ -58,45 +58,45 @@ module "networkgroup" {
 }
 
 resource "azurerm_subnet_network_security_group_association" "assoc" {
-  #subnet_id                 = module.subnet.subnet_id   #"The ID of the Subnet"
-  #network_security_group_id = module.networkgroup.secgrup_id  #"The ID of the Network Security Group which should be associated with the Subnet"
   subnet_id                 = azurerm_subnet.subnet.id
   network_security_group_id = module.networkgroup.secgrup_id
 }
 
+
+
+
 resource "azurerm_network_interface" "nic" {
-  depends_on = [ azurerm_subnet.subnet ]
-  #for_each = var.network_interface
-  # name                = each.value.name
-  # location            = each.value.location
-  # resource_group_name = each.value.resource_group_name
-  name = var.name_ip_configuration
-  location = var.location
-  resource_group_name = var.resource_group_name
+  for_each            = var.network_interfaces
+  name                = each.key
+  location            = each.value.location
+  resource_group_name = each.value.resource_group_name
+  
   ip_configuration {
     name                          = "internal"
-    subnet_id                     = azurerm_subnet.subnet.id
-    private_ip_address_allocation = var.private_ip_address_allocation
+    subnet_id                     =  azurerm_subnet.subnet.id
+    private_ip_address_allocation = each.value.private_ip_address_allocation
   }
 }
 
-resource "azurerm_linux_virtual_machine" "vm" {
-  name                =  var.vm_name
-  resource_group_name = var.resource_group_name
-  location            = var.location
-  size                = var.size
-  admin_username      = var.admin_username
-  network_interface_ids = [
-    azurerm_network_interface.nic.id,
-  ]
 
+
+resource "azurerm_linux_virtual_machine" "vm" {
+ 
+  for_each            = var.virtual_machines
+
+  name                = each.value.vm_name
+  resource_group_name = each.value.resource_group_name
+  location            = each.value.location
+  size                = each.value.size
+  admin_username      = each.value.admin_username
+  network_interface_ids = [for interface_key in each.value.network_interface_keys : azurerm_network_interface.nic[interface_key].id]
   os_disk {
-    caching              = var.caching
-    storage_account_type = var.storage_account_type
+    caching              = each.value.caching
+    storage_account_type = each.value.storage_account_type
   }
 
-    admin_ssh_key {
-    username   = var.admin_username
+  admin_ssh_key {
+    username   = each.value.admin_username
     public_key = file("~/.ssh/id_rsa.pub")
   }
 
@@ -109,67 +109,29 @@ resource "azurerm_linux_virtual_machine" "vm" {
 }
 
 
-
-# resource "azurerm_network_interface" "nic" {
-#   for_each            = var.network_interfaces
-#   name                = each.key
-#   location            = each.value.location
-#   resource_group_name = each.value.resource_group_name
-  
-#   ip_configuration {
-#     name                          = "internal"
-#     subnet_id                     =  azurerm_subnet.subnet.id
-#     private_ip_address_allocation = each.value.private_ip_address_allocation
-#   }
-# }
-
-
-
-# resource "azurerm_linux_virtual_machine" "vm" {
- 
-#   for_each            = var.virtual_machines
-
-#   name                = each.value.vm_name
-#   resource_group_name = each.value.resource_group_name
-#   location            = each.value.location
-#   size                = each.value.size
-#   admin_username      = each.value.admin_username
-#   network_interface_ids = [for interface_key in each.value.network_interface_keys : azurerm_network_interface.nic[interface_key].id]
-#   os_disk {
-#     caching              = each.value.caching
-#     storage_account_type = each.value.storage_account_type
-#   }
-
-#   admin_ssh_key {
-#     username   = each.value.admin_username
-#     public_key = file("~/.ssh/id_rsa.pub")
-#   }
-
-#   source_image_reference {
-#     publisher = "Canonical"
-#     offer     = "0001-com-ubuntu-server-jammy"
-#     sku       = "22_04-lts"
-#     version   = "latest"
-#   }
-# }
-
-
-resource "azurerm_public_ip" "publicip" {
-  name                = "PublicIPForLB"
-  location            = var.location
-  resource_group_name = var.resource_group_name
-  allocation_method   = "Static"
-}
-
 resource "azurerm_lb" "lb" {
-  name                = "TestLoadBalancer"
+  name                = var.lb_name
   location            = var.location
   resource_group_name = var.resource_group_name
 
   frontend_ip_configuration {
-    name                 = "PublicIPAddress"
-    public_ip_address_id = azurerm_public_ip.publicip.id
+    name                 = var.lb_front_name
+    subnet_id = azurerm_subnet.subnet.id
+    private_ip_address_allocation = "Dynamic"
   }
+}
+
+resource "azurerm_lb_backend_address_pool" "backpool" {
+  loadbalancer_id      = azurerm_lb.lb.id
+  name                 = var.lb_backend_address_pool_name
+}
+
+resource "azurerm_network_interface_backend_address_pool_association" "pool" {
+  for_each = var.virtual_machines
+  network_interface_id    = element([for interface_key in each.value.network_interface_keys : azurerm_network_interface.nic[interface_key].id], 0)
+
+  ip_configuration_name   = "ip${each.key}"
+  backend_address_pool_id = azurerm_lb_backend_address_pool.backpool.id
 }
 
 
@@ -182,3 +144,47 @@ resource "azurerm_lb" "lb" {
 # }
 
 
+
+# resource "azurerm_network_interface" "nic" {
+#   depends_on = [ azurerm_subnet.subnet ]
+#   #for_each = var.network_interface
+#   # name                = each.value.name
+#   # location            = each.value.location
+#   # resource_group_name = each.value.resource_group_name
+#   name = var.name_ip_configuration
+#   location = var.location
+#   resource_group_name = var.resource_group_name
+#   ip_configuration {
+#     name                          = "internal"
+#     subnet_id                     = azurerm_subnet.subnet.id
+#     private_ip_address_allocation = var.private_ip_address_allocation
+#   }
+# }
+
+# resource "azurerm_linux_virtual_machine" "vm" {
+#   name                =  var.vm_name
+#   resource_group_name = var.resource_group_name
+#   location            = var.location
+#   size                = var.size
+#   admin_username      = var.admin_username
+#   network_interface_ids = [
+#     azurerm_network_interface.nic.id,
+#   ]
+
+#   os_disk {
+#     caching              = var.caching
+#     storage_account_type = var.storage_account_type
+#   }
+
+#     admin_ssh_key {
+#     username   = var.admin_username
+#     public_key = file("~/.ssh/id_rsa.pub")
+#   }
+
+#   source_image_reference {
+#     publisher = "Canonical"
+#     offer     = "0001-com-ubuntu-server-jammy"
+#     sku       = "22_04-lts"
+#     version   = "latest"
+#   }
+# }
