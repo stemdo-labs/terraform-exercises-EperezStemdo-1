@@ -5,12 +5,12 @@ terraform {
       version = "~>3.0"
     }
   }
-  # backend "azurerm" {
-  #     resource_group_name  = "rg1eperez-lab01"
-  #     storage_account_name = "sta1eperez" 
-  #     container_name       = "tfstateeperez"
-  #     key                  = "terraform.tfstate"
-  # }
+  backend "azurerm" {
+      resource_group_name  = "rg1eperez-lab01"
+      storage_account_name = "sta1eperez" 
+      container_name       = "tfstateeperez"
+      key                  = "terraform.tfstate"
+  }
 
 }
 
@@ -19,11 +19,7 @@ provider "azurerm" {
 }
 
 
-# module "resourcegroup" {
-#   source = "./modules/resourcegroup"
-#   resource_group_name = var.resource_group_name
-#   location = var.location
-# }
+
 
 
 module "vnet" {
@@ -33,12 +29,12 @@ module "vnet" {
   resource_group_name = var.resource_group_name
 }
 
-# module "tfstate" {
-#   source = "./modules/tfstate"
-#   resource_group_name = var.resource_group_name
-#   container_access_type = var.container_access_type
-#   container_name = var.container_name
-# } 
+module "tfstate" {
+  source = "./modules/tfstate"
+  resource_group_name = var.resource_group_name
+  container_access_type = var.container_access_type
+  container_name = var.container_name
+} 
 
 
 
@@ -126,13 +122,11 @@ resource "azurerm_lb_backend_address_pool" "backpool" {
   name                 = var.lb_backend_address_pool_name
 }
 
-resource "azurerm_network_interface_backend_address_pool_association" "pool" {
-  for_each = var.virtual_machines
-  network_interface_id    = element([for interface_key in each.value.network_interface_keys : azurerm_network_interface.nic[interface_key].id], 0)
-
-  ip_configuration_name   = "ip${each.key}"
-  backend_address_pool_id = azurerm_lb_backend_address_pool.backpool.id
-}
+# module "resourcegroup" {
+#   source = "./modules/resourcegroup"
+#   resource_group_name = var.resource_group_name
+#   location = var.location
+# }
 
 
 # resource "azurerm_subnet" "this" {

@@ -13,8 +13,8 @@ namenetgroup = "epereznetworksecuritygroup"
 
 
 #tfstate
-# container_name = "tfstateeperez"
-# container_access_type = "private"
+container_name = "tfstateeperez"
+container_access_type = "private"
 
 
 
