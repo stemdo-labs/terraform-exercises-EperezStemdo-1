@@ -10,6 +10,24 @@ variable "location" {
   default = "West Europe"
 }
 
+#security group
+
+
+  variable "namenetgroup" {
+    type = string
+  }
+
+# tfstate
+
+
+# variable "container_name" {
+#   type = string
+# }
+
+# variable "container_access_type" {
+#   type = string
+# }
+
 
 # vnet
 
@@ -24,7 +42,7 @@ variable "vnet_address_space" {
 }
 
 
-# subnet
+#subnet
 
 variable "subnet_name" {
   type = string
@@ -35,6 +53,69 @@ variable "address_prefixes" {
   type = list(string)
   description = "The address prefixes to use for the subnet."
 }
+
+
+
+
+
+# # virtual machine
+
+
+# variable "virtual_machines" {
+#   type = map(object({
+#     vm_name            = string
+#     resource_group_name = string
+#     location           = string
+#     size               = string
+#     admin_username     = string
+#     caching            = string
+#     storage_account_type = string
+#     network_interface_keys = map(object({
+#       vm_name            = string
+#       resource_group_name = string
+#       location           = string
+#       size               = string
+#       admin_username     = string
+#       caching            = string
+#       storage_account_type = string
+#     }))
+
+#   }))
+# }
+# variable "virtual_machines" {
+#   type = map(object({
+#       vm_name            = string
+#       resource_group_name = string
+#       location           = string
+#       size               = string
+#       admin_username     = string
+#       caching            = string
+#       storage_account_type = string 
+#       network_interface_ids = list(string)
+    
+    
+#   }))
+# }
+
+
+# variable "network_interface_keys" {
+#   type = list(string)
+  
+# }
+
+
+# #Network interface
+# variable "network_interfaces" {
+#   type = map(object({
+#     name                       = string
+#     location                   = string
+#     resource_group_name        = string
+#     private_ip_address_allocation = string
+#   }
+#   ))
+# }
+
+
 
 #interfaz de red
 
@@ -54,7 +135,9 @@ variable "private_ip_address_allocation" {
 }
 
 
-# virtual machine
+
+
+
 
 variable "vm_name" {
   type = string
@@ -82,6 +165,7 @@ variable "storage_account_type" {
   type = string
   description = " The Type of Storage Account which should back this the Internal OS Disk. Possible values are Standard_LRS, StandardSSD_LRS, Premium_LRS, StandardSSD_ZRS and Premium_ZRS. Changing this forces a new resource to be created"
 }
+
 
 
 
@@ -121,6 +205,7 @@ variable "storage_account_type" {
 #     }))
 #   }))
 # }
+
 
 
 

@@ -8,20 +8,78 @@ subnet_name = "subneteperez"
 #virtual_network_name = "vnetepereztfexercise07"
 address_prefixes     = ["10.0.1.0/24"]
 
+#security group
+namenetgroup = "epereznetworksecuritygroup"
+
+
+#tfstate
+# container_name = "tfstateeperez"
+# container_access_type = "private"
+
+
 #Interfaz de red
 
 name_network_interface = "networinterfazperez"
 name_ip_configuration = "ipconfeperez"
 private_ip_address_allocation = "Dynamic"
 
+# #network interface
+# network_interfaces = {
+#   nic1 = {
+#     name                       = "niceperez1"
+#     location                   = "West Europe"
+#     resource_group_name        = "rg1eperez-lab01"
+#     private_ip_address_allocation = "Dynamic"
+#   }
+#   nic2 = {
+#     name                       = "niceperez2"
+#     location                   = "West Europe"
+#     resource_group_name        = "rg1eperez-lab01"
+#     private_ip_address_allocation = "Dynamic"
 
-#vm
+#   }
+
+# }
+
+
+# #vm
+
+#  virtual_machines = {
+  
+#     vm1 = {
+#       vm_name            = "vmeperez1"
+#       resource_group_name = "rg1eperez-lab01"
+#       location           = "West Europe"
+#       size               = "Standard_F2"
+#       admin_username     = "eperez"
+#       caching            = "ReadWrite"
+#       storage_account_type = "Standard_LRS"
+    
+#     network_interface_ids = ["nic1"]
+#   }
+  
+#     vm2 = {
+#       vm_name            = "vmeperez2"
+#       resource_group_name = "rg1eperez-lab01"
+#       location           = "West Europe"
+#       size               = "Standard_F2"
+#       admin_username     = "eperez"
+#       caching            = "ReadWrite"
+#       storage_account_type = "Standard_LRS"
+#     }
+#     network_interface_ids = ["nic1"]
+  
+# }
+
+//network_interface_keys = [ "nic1", "nic2" ]
+
 
 admin_username = "eperez"
 vm_name = "vmeperez"
 size = "Standard_F2"
 caching = "ReadWrite"
 storage_account_type = "Standard_LRS"
+
 
 
 # variable "network_interface" {
