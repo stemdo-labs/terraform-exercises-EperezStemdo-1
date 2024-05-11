@@ -15,6 +15,5 @@ module "weekly_exercise" {
   lb_backend_address_pool_name = var.lb_backend_address_pool_name
   lb_front_name = var.lb_front_name
   lb_name = var.lb_name
-  container_access_type = var.container_access_type
-  container_name = var.container_name
+
 }

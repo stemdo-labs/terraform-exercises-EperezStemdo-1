@@ -5,15 +5,6 @@ module "vnet" {
   resource_group_name = var.resource_group_name
 }
 
-module "tfstate" {
-  source = "./modules/tfstate"
-  resource_group_name = var.resource_group_name
-  container_access_type = var.container_access_type
-  container_name = var.container_name
-} 
-
-
-
 resource "azurerm_subnet" "subnet" {
   depends_on = [ module.vnet ]
   name                 = var.subnet_name
