@@ -1,30 +1,3 @@
-# variable "all_data" {
-#   type = map(object({
-#     resource_group_name        = string
-#     location                   = string
-#     namenetgroup               = string
-#     vnet_name                  = string
-#     vnet_address_space         = list(string)
-#     subnet_name                = string
-#     address_prefixes           = list(string)
-#     network_interfaces         = map(object({
-#       name                         = string
-#       private_ip_address_allocation = string
-#     }))
-#     virtual_machines           = map(object({
-#       vm_name            = string
-#       size               = string
-#       admin_username     = string
-#       caching            = string
-#       storage_account_type = string 
-#       network_interface_keys = list(string)
-#     }))
-#     lb_name                    = string
-#     lb_backend_address_pool_name = string
-#     lb_front_name              = string
-#   }))
-# }
-
 
 
 
@@ -110,39 +83,6 @@ variable "lb_backend_address_pool_name" {
 }
 
 variable "lb_front_name" {
-  type = string
-}
-
-
-
-
-# # resource group name
-
-# variable "resource_group_name" {
-#   type = string
-#   description = "The name of the resource group"
-# }
-
-# variable "location" {
-#   type = string
-#   default = "West Europe"
-# }
-
-# #security group
-
-
-#   variable "namenetgroup" {
-#     type = string
-#   }
-
-# # tfstate
-
-
-variable "container_name" {
-  type = string
-}
-
-variable "container_access_type" {
   type = string
 }
 

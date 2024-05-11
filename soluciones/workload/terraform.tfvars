@@ -68,13 +68,6 @@ address_prefixes     = ["10.0.1.0/24"]
 namenetgroup = "epereznetworksecuritygroup"
 
 
-#tfstate
-container_name = "tfstateeperez"
-container_access_type = "private"
-
-
-
-
 #network interface
 network_interfaces = {
   nic1 = {
