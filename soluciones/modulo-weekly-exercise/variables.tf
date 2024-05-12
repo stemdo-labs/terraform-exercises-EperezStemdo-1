@@ -63,6 +63,7 @@ variable "virtual_machines" {
     location           = string
     size               = string
     admin_username     = string
+    admin_password = string
     caching            = string
     storage_account_type = string 
     network_interface_keys = list(string)

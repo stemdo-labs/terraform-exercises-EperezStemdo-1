@@ -47,6 +47,9 @@ resource "azurerm_linux_virtual_machine" "vm" {
   location            = each.value.location
   size                = each.value.size
   admin_username      = each.value.admin_username
+  disable_password_authentication = false
+  admin_password                  = each.value.admin_password
+
   network_interface_ids = [for interface_key in each.value.network_interface_keys : azurerm_network_interface.nic[interface_key].id]
   os_disk {
     caching              = each.value.caching
@@ -59,6 +62,8 @@ resource "azurerm_linux_virtual_machine" "vm" {
     sku       = "22_04-lts"
     version   = "latest"
   }
+
+  
 }
 
 resource "azurerm_lb" "lb" {
